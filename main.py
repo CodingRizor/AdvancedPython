@@ -1,5 +1,10 @@
 import os
 import keyword
+from abc import ABC, abstractmethod
+import threading
+import multiprocessing
+
+"""
 print("OS module in python provides functions for interacting with OS.")
 cwd = os.getcwd()
 print("Current working directory - ", cwd)
@@ -98,3 +103,137 @@ def lw(text):
     return text.lower()
 val(up)
 val(lw)
+
+# Meta-Programming is the code that manipulates code.
+# Metaclasses
+a = 1
+b = [1, 2, 3]
+c = (1, 2, 3)
+d = "SD"
+print(type(a))
+print(type(b))
+print(type(c))
+print(type(d))
+
+
+class Student:
+    pass
+
+
+stu_obj = Student()
+
+# Print type of object of Student class
+print("Type of stu_obj is:", type(stu_obj))
+print(type(Student))
+
+# Enumerate - Enumerate Function adds counter to an iterable and also returns it.
+l1 = ['D', 12, "S", False, 15]
+l2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+for index, item in enumerate(l1):
+    print(index, item)
+
+l2 = [i for i in l2 if i % 2 == 0]
+print(l2)
+
+
+# Abstract Classes
+# A class which contains one or more abstract methods is called an abstract class.
+# An abstract method is a method that has a declaration but does not have an implementation.
+# Module name - ABC
+# ABC works by decorating methods of the base class as abstract and then registering concrete classes as
+# implementations of the abstract base. A method becomes abstract when decorated with the keyword @abstractmethod.
+
+
+class Shape(ABC):
+    @abstractmethod
+    def parea(self):
+        return 0
+
+
+class Rectangle(Shape):
+    type = "Rectangle"
+    sides = 4
+
+    def __init__(self):
+        self.length = 6
+        self.breadth = 7
+
+    def parea(self):
+        return self.length * self.breadth
+
+
+class Square(Shape):
+    type = "Square"
+    sides = 4
+
+    def __init__(self):
+        self.length = 6
+
+    def parea(self):
+        return self.length * self.length
+
+
+rect1 = Rectangle()
+print(rect1.parea())
+
+sq1 = Square()
+print(sq1.parea())
+
+# In the above example , abstract method is defined(no statements) and is called by rectangle and square class.
+
+"""
+
+# ----------------------Multithreading----------------------------
+# Steps-
+# 1. To import the threading module - import threading
+# 2. To create a new thread, we create an object of Thread class. It takes following arguments:
+#      target: the function to be executed by thread
+#      args: the arguments to be passed to the target function
+# 3. To start a thread, we use start method of Thread class.
+# 4. Once the threads start, the current program (you can think of it like a main thread) also keeps on executing.
+#    In order to stop execution of current program until a thread is complete, we use join method.
+
+
+def printcube(num):
+    print("Cube -", num * num * num)
+
+
+def printsquare(num):
+    print("Square -", num * num)
+
+
+t1 = threading.Thread(target=printcube, args=(10,))
+t2 = threading.Thread(target=printsquare, args=(10,))
+
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+print("Done")
+"""
+# -----------------------------------------------------------
+def task1():
+    print("Task 1 assigned to thread: {}".format(threading.current_thread().name))
+    print("ID of process running task 1: {}".format(os.getpid()))
+
+
+def task2():
+    print("Task 2 assigned to thread: {}".format(threading.current_thread().name))
+    print("ID of process running task 2: {}".format(os.getpid()))
+
+
+if __name__ == "__main__":
+    print("ID of process running main program: {}".format(os.getpid()))
+    print("Main thread name: {}".format(threading.current_thread().name))
+
+    # creating threads
+    t1 = threading.Thread(target=task1, name='t1')
+    t2 = threading.Thread(target=task2, name='t2')
+
+    t1.start()
+    t2.start()
+
+    t1.join()
+    t2.join()
+"""
+
